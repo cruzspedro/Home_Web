@@ -33,14 +33,14 @@ function App() {
 
         { /* private routes */ }
         <Route element={<RootLayout />}>
-          <Route index element={<Home />} />
-          <Route index element={<About />} />
-          <Route index element={<SearchFree />} />
-          <Route index element={<Imobiliarias />} />
-          <Route index element={<MyAccount />} />
-          <Route index element={<Favorites />} />
-          <Route index element={<Terms />} />  
-          <Route index element={<Perfil />} />  
+          <Route path='/' element={<Home />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/search-free' element={<SearchFree />} />
+          <Route path='/imobiliarias' element={<Imobiliarias />} />
+          <Route path='/my-account' element={<MyAccount />} />
+          <Route path='/favorites' element={<Favorites />} />
+          <Route path='/terms' element={<Terms />} />  
+          <Route path='/profile' element={<Perfil />} />  
         </Route>
         
 

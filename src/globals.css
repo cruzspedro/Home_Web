@@ -101,3 +101,6 @@
   margin-left: .5em;
 }
 
+.leaflet-container{
+  height: 100vh;
+}
