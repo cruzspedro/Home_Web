@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { SignUpValidation } from "@/lib/validation"
 import { z } from "zod"
@@ -18,7 +18,7 @@ const SignUpForm = () => {
       login: "",
       senha: "",
       telefone: "",
-      nascimento: new Date("00-00-0000"),
+      nascimento: "",
     },
   })
 
