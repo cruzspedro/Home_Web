@@ -31,7 +31,7 @@ const SignUpForm = () => {
   return (
     <Form {...form}>
       <div className="md:w-[320px] lg:w-[420px] flex-col mx-10 max-h-full py-5">
-        <img className="w-full h-auto" src="/src/assets/logo_forms.png"/>
+      <a href="/"><img className="w-full h-auto" src="/src/assets/logo_forms.png"/></a>
         <h2 className="pt-3 font-bold text-base text-zinc-800 text-center">Preencha os campos abaixo para se cadastrar</h2>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3 w-full mt-4">
           <FormField
