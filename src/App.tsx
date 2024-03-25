@@ -13,10 +13,12 @@ import MyAccount from './_root/pages/MyAccount'
 import Perfil from './_root/pages/Perfil'
 import SearchFree from './_root/pages/SearchFree'
 import Terms from './_root/pages/Terms'
+import { Toaster } from './components/ui/toaster'
 import './globals.css'
 import { Routes, Route } from 'react-router-dom'
 
 function App() {
+  var loggedIn = window.sessionStorage.getItem("isLoggedIn");
   return (
     <main className='flex h-screen'>
       <Routes>
@@ -33,7 +35,7 @@ function App() {
 
         { /* private routes */ }
         <Route element={<RootLayout />}>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={loggedIn?<Perfil /> : <Home />} />
           <Route path='/about' element={<About />} />
           <Route path='/search-free' element={<SearchFree />} />
           <Route path='/imobiliarias' element={<Imobiliarias />} />
@@ -45,6 +47,7 @@ function App() {
         
 
       </Routes>
+      <Toaster />
     </main>
   )
 }

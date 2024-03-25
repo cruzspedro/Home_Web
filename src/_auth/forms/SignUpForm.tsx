@@ -5,9 +5,15 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { SignUpValidation } from "@/lib/validation"
 import { z } from "zod"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { UserSignUp } from "@/utils/userAuth"
+import { useToast } from "@/components/ui/use-toast"
+import userCreation from "@/utils/userCreation"
 
 const SignUpForm = () => {
+
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof SignUpValidation>>({
@@ -20,20 +26,33 @@ const SignUpForm = () => {
       telefone: "",
       nascimento: "",
     },
-  })
+  });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof SignUpValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
-  }
+  //  2. Define a submit handler.
+ function onSubmit(values: z.infer<typeof SignUpValidation>) {
+  // Do something with the form values.
+  // ✅ This will be type-safe and validated.
+  var user = {email:values.email, password:values.senha}
+  console.log(user)
+  UserSignUp(user).then(response => {
+    if (!response?.session){
+      return toast({title:'Autenticação falhou! Verifique as credenciais e tente novamente em alguns segundos.', variant:'destructive'})
+    }
+    console.log(response?.session)
+    userCreation({id:response?.user?.id, nome:values.nome, email:values.email, telefone:values.telefone, nascimento:values.nascimento})
+    window.sessionStorage.setItem("data", JSON.stringify(response?.session))
+    window.sessionStorage.setItem("isLoggedIn", "true")
+    navigate('/profile')
+  })
+  
+}
+
   return (
     <Form {...form}>
       <div className="md:w-[320px] lg:w-[420px] flex-col mx-10 max-h-full py-5">
       <a href="/"><img className="w-full h-auto" src="/src/assets/logo_forms.png"/></a>
         <h2 className="pt-3 font-bold text-base text-zinc-800 text-center">Preencha os campos abaixo para se cadastrar</h2>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3 w-full mt-4">
+        <form id="my-form" onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3 w-full mt-4">
           <FormField
             control={form.control}
             name="nome"
@@ -55,6 +74,19 @@ const SignUpForm = () => {
                 <FormLabel>E-mail</FormLabel>
                 <FormControl>
                   <Input placeholder="Seu endereço de e-mail" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="login"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Login</FormLabel>
+                <FormControl>
+                  <Input placeholder="Seu Nome de Usuário" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -99,7 +131,7 @@ const SignUpForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="mt-2">Cadastre-se</Button>
+          <Button form="my-form" type="submit" className="mt-2">Cadastre-se</Button>
         </form>
         <p className="text-center pt-3"> Já possui uma conta?<Link to="/sign-in" className="ml-2 font-semibold text-slate-900">Entre</Link> </p> 
         <p className="text-center py-3 separator">ou</p>

@@ -5,9 +5,14 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { SignInValidation } from "@/lib/validation"
 import { z } from "zod"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { UserSignIn } from "@/utils/userAuth"
+import { useToast } from "@/components/ui/use-toast"
 
 const SignInForm = () => {
+
+  const navigate = useNavigate()
+  const { toast } = useToast()
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof SignInValidation>>({
@@ -22,8 +27,19 @@ const SignInForm = () => {
   function onSubmit(values: z.infer<typeof SignInValidation>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+    var user = {email:values.login, password:values.senha}
+    console.log(user)
+    UserSignIn(user).then(response => {
+      if (!response?.session){
+        return toast({title:'Autenticação falhou! Verifique as credenciais e tente novamente em alguns segundos.', variant:'destructive'})
+      }
+      console.log(response?.session)
+      window.sessionStorage.setItem("data", JSON.stringify(response?.session))
+      window.sessionStorage.setItem("isLoggedIn", "true")
+      navigate('/profile')
+    })
   }
+  
   return (
     <Form {...form}>
       <div className="md:w-[320px] lg:w-[420px] flex-col mx-10 max-h-full py-5">
