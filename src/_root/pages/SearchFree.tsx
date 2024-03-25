@@ -1,8 +1,8 @@
-import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, useMap } from 'react-leaflet'
 import "leaflet/dist/leaflet.css"
 import { useEffect, useMemo, useState } from 'react'
 import UserIcon from '@/lib/map/UserIcon'
-import L, { popup }  from "leaflet";
+import L from "leaflet";
 import { supabase } from '@/utils/supabase';
 import geocode from '@/utils/geocode';
 import {
@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { arrayOutputType, z } from "zod"
+import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -94,12 +94,11 @@ const SearchFree = () => {
   }
   
   function ImoveisMarkers(){
-    var resIcon;
     const map = useMap()
     Markers.addTo(map)
     userMarkers.addTo(map)
-    const [fetchError, setFetchError] = useState<any>(null)
-    const [imoveis, setImoveis] = useState<any>(null)
+    const [setFetchError] = useState<any>(null)
+    const [setImoveis] = useState<any>(null)
   
     useEffect(() => {
   
@@ -118,7 +117,6 @@ const SearchFree = () => {
             const promise_data = (geocode(res.endereco))
             promise_data.then((response) => response.json()).then(json_data => {
               if (json_data[0]){
-                resIcon = 
                 L.marker(L.latLng(parseFloat(json_data[0]?.lat), parseFloat(json_data[0]?.lon)), {icon: TipoIcon('1')}).bindPopup(res.titulo+': '+res.descricao).addTo(Markers)
               }
             })
