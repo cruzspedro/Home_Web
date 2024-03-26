@@ -4,31 +4,31 @@ export function TipoIcon(tipo:string){
     var caminho_imagem: string;
     switch (tipo) {
         case "1":
-            caminho_imagem = "/public/aluguel_casa.png"
+            caminho_imagem = "/aluguel_casa.png"
             break;
     
         case "2":
-            caminho_imagem = "/public/aluguel_apto.png"
+            caminho_imagem = "/aluguel_apto.png"
             break;
 
         case "3":
-            caminho_imagem = "/public/temporada_casa.png"
+            caminho_imagem = "/temporada_casa.png"
             break;
 
         case "4":
-            caminho_imagem = "/public/temporada_apto.png"
+            caminho_imagem = "/temporada_apto.png"
             break;
 
         case "5":
-            caminho_imagem = "/public/venda_casa.png"
+            caminho_imagem = "/venda_casa.png"
             break;
 
         case "6":
-            caminho_imagem = "/public/venda_apto.png"
+            caminho_imagem = "/venda_apto.png"
             break;
         
         default:
-            caminho_imagem = "/public/Icone Maps Usuário.png"
+            caminho_imagem = "/Icone Maps Usuário.png"
             break;
     }
     return (
