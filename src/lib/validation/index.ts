@@ -21,3 +21,17 @@ export const FilterValidation = z.object({
     qtd_quartos : z.string(),
     qtd_banheiros : z.string(),
   })
+
+export const ImovelValidation = z.object({
+  titulo: z.string(),
+  tipo_contrato: z.string(),
+  tipo_imovel : z.string(),
+  endereco: z.string(),
+  qtd_quartos : z.string(),
+  qtd_banheiros : z.string(),
+  area_util : z.string(),
+  area_construida : z.string(),
+  descricao : z.string(),
+  foto_principal : z.string(),
+  fotos : z.string()
+})
